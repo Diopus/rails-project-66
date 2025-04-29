@@ -1,11 +1,22 @@
-p style="color: green" = notice
+= content_for :title do
+  = t('repositories.titles.all')
+                    
+= link_to new_repository_path, class: 'btn btn-primary repositories-new-button my-2 py-3 w-100' do
+  i.bi.bi-plus-circle.me-1
+  = t('repositories.links.new')
+  
+.div.table-responsive.mb-4
+  table.table.table-striped.table-borderless
+    thead
+      tr
+        th{ scope = 'col' } = t('active_record.attributes.repository.name')
+        th{ scope = 'col' } = t('active_record.attributes.repository.language')
+        th{ scope = 'col' } = t('active_record.attributes.repository.state')
+        th
 
-h1 Repositories
-
-#repositories
-  - @repositories.each do |repository|
-    == render repository
-    p
-      = link_to "Show this repository", repository
-
-= link_to "New repository", new_repository_path
+    tbody
+      - @repositories.each do |repository|
+        tr
+          td = link_to repository.name, repository_path(repository)
+          td = repository.language
+          td = repository.aasm.human_state

@@ -21,8 +21,8 @@
         / Left side
         ul.navbar-nav.me-auto.mb-2.mb-md-0
           - if user_signed_in?
-            li.nav-item = 'Repositories'
-              / = link_to t('layouts.nav.my_bulletins'), profile_path, class: 'nav-link'
+            li.nav-item
+              = link_to t('layouts.nav.repositories'), repositories_path, class: 'nav-link'
         / Right side
         ul.navbar-nav.ms-auto.mb-2.mb-md-0
           - if user_signed_in?
