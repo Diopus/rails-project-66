@@ -1,0 +1,11 @@
+p style="color: green" = notice
+
+h1 Repositories
+
+#repositories
+  - @repositories.each do |repository|
+    == render repository
+    p
+      = link_to "Show this repository", repository
+
+= link_to "New repository", new_repository_path
