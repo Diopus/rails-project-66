@@ -1,0 +1,6 @@
+- if flash.any?
+  .container.my-2
+    - flash.each do |type, msg|
+      .alert.alert-dismissible.fade.show class="#{bootstrap_flash_class(type)}"
+        = msg
+        button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"

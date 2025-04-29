@@ -1,0 +1,57 @@
+/ Nav panel
+.container.mb-2
+  .py-2.border-bottom
+    .navbar.navbar-expand-md.navbar-light
+      / Brand
+      = link_to t('layouts.application.title'), root_path, class: 'navbar-brand'
+
+      / Toggler for mobile
+      button.navbar-toggler(
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarContent"
+        aria-controls="navbarContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      )
+        span.navbar-toggler-icon
+
+      / Nav panel content
+      #navbarContent.collapse.navbar-collapse
+        / Left side
+        ul.navbar-nav.me-auto.mb-2.mb-md-0
+          - if user_signed_in?
+            li.nav-item
+              = link_to t('layouts.nav.my_bulletins'), profile_path, class: 'nav-link'
+            li.nav-item.d-flex.align-items-center
+              = link_to new_bulletin_path, class: 'btn btn-outline-primary btn-sm' do
+                i.bi.bi-plus-circle.me-1
+                = t('layouts.nav.new_bulletin')
+
+        / Right side
+        ul.navbar-nav.ms-auto.mb-2.mb-md-0
+          - if user_signed_in?
+            li.nav-item.me-4
+              = link_to t('layouts.nav.administration'), admin_root_path, class: 'nav-link' if current_user.admin?
+            li.nav-item.dropdown
+              a.nav-link.dropdown-toggle href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" class="nav-link"
+                = current_user.email
+              ul.dropdown-menu.dropdown-menu-end aria-labelledby="userDropdown"
+                li
+                  = button_to t('layouts.nav.log_out'), auth_logout_path, method: :delete, class: 'dropdown-item'
+          - else
+            li.nav-item.me-2
+              = button_to t('layouts.nav.sign_in'), auth_request_path(:developer), data: { turbo: false }, class: 'btn btn-outline-primary' if Rails.env.development?
+            li.nav-item.me-2
+              = button_to auth_request_path(:github), data: { turbo: false }, class: 'btn btn-outline-primary' do
+                = t('layouts.nav.sign_in_with')
+                span.bi.bi-github.ms-1
+
+          / Lang switch
+          li.nav-item.dropdown
+            a.nav-link.dropdown-toggle href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+              = I18n.locale.upcase
+            ul.dropdown-menu.dropdown-menu-end aria-labelledby="languageDropdown"
+              - I18n.available_locales.each do |locale|
+                li
+                  = link_to t("language.name.#{locale}"), url_for(locale: locale), class: 'dropdown-item'
