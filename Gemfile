@@ -43,6 +43,8 @@ gem 'octokit'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 
+gem 'rails-i18n'
+
 gem 'sentry-rails'
 gem 'sentry-ruby'
 gem 'simple_form'
