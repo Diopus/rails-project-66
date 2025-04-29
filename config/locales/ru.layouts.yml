@@ -1,0 +1,12 @@
+---
+ru:
+  layouts:
+    application:
+      title: Качество репозитория
+    nav:
+      administration: Администрирование
+      log_out: Выйти
+      my_bulletins: Мои объявления
+      new_bulletin: Новое объявление
+      sign_in: Войти
+      sign_in_with: Войти через

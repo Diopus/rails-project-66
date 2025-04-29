@@ -1,0 +1,24 @@
+---
+ru:
+  pagination:
+    first: " Первая"
+    last: 'Последняя '
+    next: 'Следующая '
+    previous: " Предыдущая"
+    truncate: "&hellip;"
+  search:
+    hints:
+      category: Поиск по категории
+      state: Поиск по состоянию
+      title: Поиск по заголовку
+    links:
+      reset: Сброс
+      submit: Поиск
+    placeholders:
+      category: Выберите категорию...
+      state: Выберите состояние...
+      title: Заголовок содержит...
+  tables:
+    headers:
+      actions: Действия
+      id: ID

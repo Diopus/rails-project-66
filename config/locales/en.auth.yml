@@ -1,0 +1,9 @@
+---
+en:
+  auth:
+    error: An error occurred while signing in
+    not_authorized: You do not have permission to view this resource.
+    req_admin: Only administrators are allowed to access this resource.
+    req_log_in: Only logged-in users can access this resource.
+    signed_in: You have successfully signed in.
+    signed_out: You have successfully signed out.

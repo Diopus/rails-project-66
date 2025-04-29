@@ -1,0 +1,12 @@
+---
+en:
+  layouts:
+    application:
+      title: Github quality
+    nav:
+      administration: Administration
+      log_out: Log out
+      my_bulletins: My bulletins
+      new_bulletin: New bulletin
+      sign_in: Sign in
+      sign_in_with: Sign in with
