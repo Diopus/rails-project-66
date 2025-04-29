@@ -1,6 +1,6 @@
 ---
 en:
-  bulletins:
+  repositories:
     confirmation:
       archive: Do you really want to archive this bulletin?
       delete: Do you really want to delete this bulletin?
@@ -8,20 +8,17 @@ en:
       reject: Do you really want to reject this bulletin?
     crud:
       create:
-        failure: Bulletin couldn't be created
-        success: Bulletin has been successfully created
+        failure: Repository couldn't be created
+        success: Repository has been successfully created
       update:
-        failure: Bulletin couldn't be updated
-        success: Bulletin has been successfully updated
-    image_field:
-      label_idle: Drag & Drop your picture or Browse
+        failure: Repository couldn't be updated
+        success: Repository has been successfully updated
     links:
       delete: Delete
       edit: Edit
-      new: New bulletin
+      new: New repository
     titles:
-      all: Bulletins
-      edit: Edit bulletin
-      my: My bulletins
-      new: New bulletin
-      under_moderation: Bulletins under moderation
+      all: Repositories
+      edit: Edit repository
+      my: My repositories
+      new: New repository
