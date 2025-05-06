@@ -17,6 +17,11 @@
     tbody
       - @repositories.each do |repository|
         tr
-          td = link_to repository.name, repository_path(repository)
+          td
+            - if repository.name.present?
+              = link_to repository.name, repository_path(repository)
+            - else
+              .d-flex.align-items-center
+                .spinner-border.spinner-border-sm.text-primary[role="status" aria-hidden="true"]
+                em.ms-2 loading…
           td = repository.language
-          td = repository.aasm.human_state
