@@ -2,7 +2,7 @@
 
 module Web
   class RepositoriesController < ApplicationController
-    before_action :set_repository, only: %i[show edit update destroy]
+    before_action :set_repository, only: %i[show destroy]
 
     # GET /repositories or /repositories.json
     def index
@@ -17,9 +17,6 @@ module Web
       @repository = Repository.new
     end
 
-    # GET /repositories/1/edit
-    def edit; end
-
     # POST /repositories or /repositories.json
     def create
       @repository = Repository.new(repository_params)
@@ -30,21 +27,6 @@ module Web
           format.json { render :show, status: :created, location: @repository }
         else
           format.html { render :new, status: :unprocessable_entity }
-          format.json { render json: @repository.errors, status: :unprocessable_entity }
-        end
-      end
-    end
-
-    # PATCH/PUT /repositories/1 or /repositories/1.json
-    def update
-      respond_to do |format|
-        if @repository.update(repository_params)
-          # format.html { redirect_to @repository, notice: 'Repository was successfully updated.' }
-          format.json { render :show, status: :ok, location: @repository }
-        else
-          format.html { render :edit, status: :unprocessable_entity }
-          format.json { render json: @repository.errors, status: :unprocessable_entity }
-        end
       end
     end
 
