@@ -1,5 +1,5 @@
 = simple_form_for repository do |f|
 
-  .mb-3 
+  .mb-3
     = f.input :github_id, hint: false, as: :select, required: true, collection: repositories_list
   = f.submit t('repositories.links.add'), class: 'btn btn btn-success'

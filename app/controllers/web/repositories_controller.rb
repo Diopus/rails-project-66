@@ -30,7 +30,7 @@ module Web
       end
     end
 
-       # DELETE /repositories/1 or /repositories/1.json
+    # DELETE /repositories/1 or /repositories/1.json
     def destroy
       @repository.destroy!
 
