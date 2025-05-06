@@ -1,7 +1,7 @@
 = content_for :title do
   = t('repositories.titles.new')
 
-== render 'form', repository: @repository
+== render 'form', repository: @repository, repositories_list: @repositories_list
 
 br
 
