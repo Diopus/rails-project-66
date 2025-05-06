@@ -15,22 +15,22 @@ module Web
     # GET /repositories/new
     def new
       @repository = Repository.new
+      @repositories_list = fetch_repositories_list
     end
 
     # POST /repositories or /repositories.json
     def create
-      @repository = Repository.new(repository_params)
+      @repository = current_user.repositories.build(repository_params)
 
-      respond_to do |format|
-        if @repository.save
-          # format.html { redirect_to @repository, notice: 'Repository was successfully created.' }
-          format.json { render :show, status: :created, location: @repository }
-        else
-          format.html { render :new, status: :unprocessable_entity }
+      if @repository.save
+        UpdateRepositoryInfoJob.perform_later(@repository.id)
+        redirect_to repositories_path, notice: I18n.t('repositories.crud.create.success')
+      else
+        format.html { render :new, status: :unprocessable_entity }
       end
     end
 
-    # DELETE /repositories/1 or /repositories/1.json
+       # DELETE /repositories/1 or /repositories/1.json
     def destroy
       @repository.destroy!
 
