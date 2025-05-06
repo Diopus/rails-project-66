@@ -1,8 +1,27 @@
-== render @repository
+= content_for :title do
+  = @repository.full_name
 
-div
-  => link_to 'Edit this repository', edit_repository_path(@repository)
-  '|
-  =< link_to 'Back to repositories', repositories_path
+div.table-responsive
+  table.table.table-borderless.table-small-first-col
+    colgroup
+      col(style="width: 200px;")
+      col
+    tbody
+      tr
+        th
+          strong.me-2= t('.name')
+        td= @repository.full_name
+      tr
+        th
+          strong.me-2= t('.language')
+        td= @repository.language
+      tr
+        th
+          strong.me-2= t('.creating_date')
+        td= l(@repository.created_at, format: :long)
+      tr
+        th
+          strong.me-2= t('.updating_date')
+        td= l(@repository.updated_at, format: :long)
 
-  = button_to 'Destroy this repository', @repository, method: :delete
+=< link_to 'Back to repositories', repositories_path
