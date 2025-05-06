@@ -14,9 +14,9 @@ en:
         failure: Repository couldn't be updated
         success: Repository has been successfully updated
     links:
+      add: Add
       delete: Delete
       edit: Edit
-      new: New repository
     titles:
       all: Repositories
       edit: Edit repository
