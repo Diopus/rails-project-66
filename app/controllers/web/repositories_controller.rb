@@ -42,6 +42,11 @@ module Web
 
     private
 
+    def fetch_repositories_list
+      client = Octokit::Client.new(access_token: current_user.token)
+      Github::Repositories::FetchListService.new(client:).call
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_repository
       @repository = Repository.find(params[:id])
