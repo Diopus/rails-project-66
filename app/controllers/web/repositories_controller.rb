@@ -29,18 +29,12 @@ module Web
         UpdateRepositoryInfoJob.perform_later(@repository.id)
         redirect_to repositories_path, notice: I18n.t('repositories.crud.create.success')
       else
-        format.html { render :new, status: :unprocessable_entity }
+        flash[:alert] = I18n.t('repositories.crud.create.failure')
+        render :new, status: :unprocessable_entity
+        flag_update = false
       end
-    end
 
-    # DELETE /repositories/1 or /repositories/1.json
-    def destroy
-      @repository.destroy!
-
-      respond_to do |format|
-        # format.html { redirect_to repositories_path, status: :see_other, notice: 'Repository was successfully destroyed.' }
-        format.json { head :no_content }
-      end
+      UpdateRepositoryInfoJob.perform_later(@repository.id) if flag_update
     end
 
     private
