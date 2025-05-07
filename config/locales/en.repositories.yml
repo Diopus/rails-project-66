@@ -8,6 +8,7 @@ en:
       reject: Do you really want to reject this bulletin?
     crud:
       create:
+        exists: Repository already exists and will be updated
         failure: Repository couldn't be created
         success: Repository has been successfully created
       update:
