@@ -7,7 +7,7 @@ module Web
 
     # GET /repositories or /repositories.json
     def index
-      @repositories = Repository.all
+      @repositories = current_user.repositories
     end
 
     # GET /repositories/1 or /repositories/1.json
