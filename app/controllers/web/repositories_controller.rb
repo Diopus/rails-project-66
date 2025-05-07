@@ -2,6 +2,7 @@
 
 module Web
   class RepositoriesController < ApplicationController
+    before_action :authenticate_user!, only: %i[index show new create]
     before_action :set_repository, only: %i[show destroy]
 
     # GET /repositories or /repositories.json
