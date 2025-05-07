@@ -48,10 +48,5 @@ module Web
     def set_repository
       @repository = Repository.find(params[:id])
     end
-
-    # Only allow a list of trusted parameters through.
-    def repository_params
-      params.require(:repository).permit(:name, :github_id, :full_name, :language, :clone_url, :ssh_url, :user_id)
-    end
   end
 end
