@@ -4,11 +4,11 @@ class Web::ApplicationController < ApplicationController
   before_action :set_locale
 
   include Authentication
-  # include Pundit::Authorization
+  include Pundit::Authorization
 
   helper_method :user_signed_in?, :current_user
 
-  # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -24,7 +24,7 @@ class Web::ApplicationController < ApplicationController
   end
 
   def user_not_authorized
-    flash[:alert] = t('auth.not_authorized') # 'You are not authorized to perform this action.'
+    flash[:alert] = t('auth.not_authorized')
     redirect_back_or_to(root_path)
   end
 end
