@@ -6,7 +6,7 @@ class ApplicationContainer
   extend Dry::Container::Mixin
 
   if Rails.env.test?
-    register(:octokit_client) { OctokitClientStub.new }
+    register(:octokit_client) { |_user_token| OctokitClientStub.new }
   else
     register(:octokit_client) { |user_token| Octokit::Client.new(access_token: user_token, auto_paginate: true) }
   end
