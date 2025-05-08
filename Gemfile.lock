@@ -114,6 +114,8 @@ GEM
     enumerize (2.7.0)
       activesupport (>= 3.2)
     erubi (1.13.1)
+    faker (3.5.1)
+      i18n (>= 1.8.11, < 2)
     faraday (2.13.1)
       faraday-net_http (>= 2.0, < 3.5)
       json
@@ -410,6 +412,7 @@ DEPENDENCIES
   dotenv-rails
   dry-container
   enumerize
+  faker
   jbuilder
   jsbundling-rails
   octokit
