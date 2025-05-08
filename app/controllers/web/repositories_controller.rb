@@ -5,23 +5,19 @@ module Web
     before_action :authenticate_user!, only: %i[index show new create]
     before_action :set_repository, only: %i[show]
 
-    # GET /repositories or /repositories.json
     def index
       @repositories = current_user.repositories
     end
 
-    # GET /repositories/1 or /repositories/1.json
     def show
       authorize @repository
     end
 
-    # GET /repositories/new
     def new
       @repository = Repository.new
       @repositories_list = fetch_repositories_list
     end
 
-    # POST /repositories or /repositories.json
     def create
       flag_update = true
 
