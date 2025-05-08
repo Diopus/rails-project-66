@@ -5,7 +5,7 @@ class UpdateRepositoryInfoJob < ApplicationJob
 
   def perform(repository_id)
     repository = Repository.find(repository_id)
-    client = Octokit::Client.new
+    client = ApplicationContainer[:octokit_client][repository.user.token]
 
     return unless (repository_attributes = Github::Repositories::FetchInfoService.new(repository:, client:).call)
 

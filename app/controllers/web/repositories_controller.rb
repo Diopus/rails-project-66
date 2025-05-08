@@ -42,7 +42,7 @@ module Web
     private
 
     def fetch_repositories_list
-      client = Octokit::Client.new(access_token: current_user.token)
+      client = ApplicationContainer[:octokit_client][current_user.token]
       Github::Repositories::FetchListService.new(client:).call
     end
 
