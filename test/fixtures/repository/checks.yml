@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  repository: one
+  commit_id: MyString
+  passed: false
+  offenses_count: 1
+
+two:
+  repository: two
+  commit_id: MyString
+  passed: false
+  offenses_count: 1
