@@ -31,7 +31,7 @@ class Web::RepositoriesControllerTest < ActionDispatch::IntegrationTest
 
     # Stub the service to return a fake list
     service_stub = Struct.new(:call).new(fake_list)
-    Github::Repositories::FetchListService.stub :new, ->(client:) { service_stub } do
+    Github::Repositories::FetchListService.stub :new, ->(client:) { service_stub } do # rubocop:disable Lint/UnusedBlockArgument
       get new_repository_path
     end
 
