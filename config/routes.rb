@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   scope module: :web do
     root 'home#index'
 
-    resources :repositories, only: %i[index show new create]
+    resources :repositories, only: %i[index show new create] do
+      resources :checks, only: %i[create show]
+    end
 
     post 'auth/:provider', to: 'auth#request', as: :auth_request
     get 'auth/:provider/callback', to: 'auth#callback', as: :callback_auth
