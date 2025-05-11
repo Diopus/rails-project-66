@@ -9,7 +9,9 @@ class CheckRepositoryJob < ApplicationJob
 
     clean_repositories_directory
 
-    @check.clone_repo!
+    check.commit_id = last_commit_id_in_default_branch(check.repository)
+
+    check.clone_repo!
     @open3 = ApplicationContainer[:open3]
     Github::Repositories::CloneService.new(repository: @check.repository, path:, open3:).call
 
@@ -31,7 +33,18 @@ class CheckRepositoryJob < ApplicationJob
     end
   end
 
+  private
+
   def clean_repositories_directory
     FileUtils.rm_rf(@path) if @path && Dir.exist?(@path)
+  end
+
+  def last_commit_id_in_default_branch(repo)
+    client = ApplicationContainer[:octokit_client][repo.user.token]
+
+    repo_data = client.repository(repo.github_id)
+    branch = repo_data.default_branch
+    last_sha = client.commits(repo.github_id, branch).first.sha
+    last_sha[0...6]
   end
 end
