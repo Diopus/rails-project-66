@@ -15,8 +15,9 @@ class CheckRepositoryJob < ApplicationJob
     @open3 = ApplicationContainer[:open3]
     Github::Repositories::CloneService.new(repository: @check.repository, path:, open3:).call
 
-    # @check.check!
-    # Github::Repositories::LinterService.new(check:).call
+    check.check!
+    config_path = Rails.root.join('config/linters/rubocop.yml').to_s
+    Github::Repositories::Linter::RubocopService.new(path: @path, open3: @open3, config_path:).call
 
     @check.finish!
   rescue StandardError => e
