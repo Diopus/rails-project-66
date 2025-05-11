@@ -11,11 +11,17 @@ module Github
 
       def call
         cmd = "git clone #{@repository.clone_url} #{@path}"
-        @open3.popen3(cmd) do |_stdin, _stdout, stderr, wait_thr|
-          unless wait_thr.value.success?
-            raise "Error: #{stderr.read}"
-          end
-        end
+        output, status = @open3.capture2e(cmd)
+
+        return if status.success?
+
+        raise "git clone error:\n#{output}"
+
+        # @open3.popen3(cmd) do |_stdin, _stdout, stderr, wait_thr|
+        #   unless wait_thr.value.success?
+        #     raise "Error: #{stderr.read}"
+        #   end
+        # end
       end
     end
   end
