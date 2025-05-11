@@ -4,8 +4,8 @@ class CheckRepositoryJob < ApplicationJob
   queue_as :default
 
   def perform(check_id)
-    @check = Repository::Check.find(check_id)
-    @path = Rails.root.join('tmp', 'repositories', @check.repository.github_id.to_s)
+    check = Repository::Check.find(check_id)
+    @path = Rails.root.join('tmp', 'repositories', check.repository.github_id.to_s)
 
     clean_repositories_directory
 
@@ -13,24 +13,22 @@ class CheckRepositoryJob < ApplicationJob
 
     check.clone_repo!
     @open3 = ApplicationContainer[:open3]
-    Github::Repositories::CloneService.new(repository: @check.repository, path:, open3:).call
+    Github::Repositories::CloneService.new(repository: check.repository, path: @path, open3: @open3).call
 
     check.check!
     config_path = Rails.root.join('config/linters/rubocop.yml').to_s
     Github::Repositories::Linter::RubocopService.new(path: @path, open3: @open3, config_path:).call
 
-    @check.finish!
+    check.finish!
   rescue StandardError => e
     Rails.logger.error("CheckRepositoryJob failed: #{e.message}")
     Rails.logger.error(e.backtrace.join("\n"))
-    @check.fail!
+    check.fail!
   ensure
-    # Clean up the cloned repository
-    clean_repositories_directory
+    # clean_repositories_directory
 
-    # Ensure the check is marked as failed if it was not finished successfully
-    unless @check.finished?
-      @check.fail!
+    unless check.finished?
+      check.fail!
     end
   end
 
