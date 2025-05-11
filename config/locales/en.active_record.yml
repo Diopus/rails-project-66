@@ -1,0 +1,24 @@
+---
+en:
+  active_record:
+    attributes:
+      check:
+        aasm_state:
+          cloning: Cloning
+          checking: Checking
+          failed: Failed
+          finished: Finished
+          pending: Pending
+        commit_id: Commit ID
+        created_at: Created
+        id: ID
+        passed: Check passed
+        state: State
+        updated_at: Updated
+      repository:
+        created_at: Created
+        id: ID
+        language: Language
+        name: Name
+        state: State
+        updated_at: Updated

@@ -1,0 +1,24 @@
+---
+ru:
+  active_record:
+    attributes:
+      check:
+        aasm_state:
+          cloning: Клонирование
+          checking: Проверка
+          failed: Неудача
+          finished: Завершено
+          pending: Ожидание
+        commit_id: ID коммита
+        created_at: Создано
+        id: ID
+        passed: Проверка пройдена
+        state: Состояние
+        updated_at: Обновлено
+      repository:
+        created_at: Создано
+        id: ID
+        language: Язык
+        name: Имя
+        state: Состояние
+        updated_at: Обновлено

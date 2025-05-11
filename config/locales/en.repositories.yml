@@ -16,10 +16,9 @@ en:
         success: Repository has been successfully updated
     links:
       add: Add
+      check: Start check
       delete: Delete
-      edit: Edit
     titles:
       all: Repositories
-      edit: Edit repository
       my: My repositories
       new: New repository

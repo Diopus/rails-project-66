@@ -1,0 +1,12 @@
+---
+en:
+  checks:
+    crud:
+      create:
+        failure: Check couldn't be created
+        success: Check has been successfully created
+    titles:
+      all: Checks
+      new: New check
+      one: "Check # %{id}"
+    not_started: Check not started

@@ -6,7 +6,6 @@ en:
     nav:
       administration: Administration
       log_out: Log out
-      my_bulletins: My bulletins
-      new_bulletin: New bulletin
+      repositories: Repositories
       sign_in: Sign in
       sign_in_with: Sign in with
