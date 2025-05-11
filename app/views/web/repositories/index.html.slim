@@ -3,7 +3,7 @@
 
 = link_to new_repository_path, class: 'btn btn-primary repositories-new-button my-2 py-3 w-100' do
   i.bi.bi-plus-circle.me-1
-  = t('repositories.links.new')
+  = t('repositories.links.add')
 
 .div.table-responsive.mb-4
   table.table.table-striped.table-borderless
@@ -25,3 +25,5 @@
                 .spinner-border.spinner-border-sm.text-primary[role="status" aria-hidden="true"]
                 em.ms-2 loading…
           td = repository.language
+          - check_passed = repository.checks.last&.passed
+          td = check_passed.nil? ? t('checks.not_started') : check_passed
