@@ -10,15 +10,14 @@ AllCops:
   TargetRailsVersion: 7
   DisplayCopNames: true
   Exclude:
-    - 'bin/**'
-    - 'db/schema.rb'
-    - 'db/migrate/**'
-    - 'db/data_schema.rb'
-    - 'vendor/**/*'
-    - 'node_modules/**/*'
-    - 'vendor/**/*'
-    - 'node_modules/**/*'
-    - 'tmp/**/*'
+    - '../../tmp/repositories/*/bin/**'
+    - '../../tmp/repositories/*/db/schema.rb'
+    - '../../tmp/repositories/*/db/migrate/**'
+    - '../../tmp/repositories/*/vendor/**/*'
+    - '../../tmp/repositories/*/node_modules/**/*'
+    - '../../tmp/repositories/*/vendor/**/*'
+    - '../../tmp/repositories/*/node_modules/**/*'
+    - '../../tmp/repositories/*/tmp/**/*'
   SuggestExtensions: false
 
 Rails:
