@@ -1,2 +1,29 @@
-h1 Web::Repositories::Checks#show
-p Find me in app/views/web/repositories/checks/show.html.slim
+= content_for :title do
+  = t('checks.titles.one', id: @check.id)
+table.table
+  tbody
+    tr
+      td = t('.created_at')
+      td = l(@check.created_at, format: :long)
+    tr
+      td = t('.status')
+      td = @check.aasm.human_state
+    tr
+      td = t('.check_passed')
+      td = @check.passed
+    tr
+      td = t('.offenses_count')
+      td = @check.offenses_count
+    tr
+      td = t('.commit_id')
+      td = link_to github_commit_url(@repository, @check.commit_id) do
+        = @check.commit_id
+= link_to repository_path(@repository), class: 'btn btn-primary mb-4' do
+  = t('.back_to_repository')
+table.table.table-hover.mb-5
+  thead
+    tr
+      th = t('.message')
+      th = t('.rule_id')
+      th = t('.coords')
+  tbody
