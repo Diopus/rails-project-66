@@ -15,7 +15,9 @@ Rails.application.routes.draw do
     root 'home#index'
 
     resources :repositories, only: %i[index show new create] do
-      resources :checks, only: %i[create show]
+      scope module: :repositories do
+        resources :checks, only: %i[create show]
+      end
     end
 
     post 'auth/:provider', to: 'auth#request', as: :auth_request
