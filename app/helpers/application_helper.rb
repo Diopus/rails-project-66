@@ -11,4 +11,8 @@ module ApplicationHelper
     else 'alert-secondary'
     end
   end
+
+  def github_commit_url(repository, commit_id)
+    ['https://github.com', repository.full_name, 'commit', commit_id].join('/')
+  end
 end
