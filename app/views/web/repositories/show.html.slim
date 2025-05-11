@@ -1,6 +1,9 @@
 = content_for :title do
   = @repository.full_name
 
+= link_to repository_checks_path(@repository), data: { turbo_method: :post }, class: 'btn btn-primary' do
+    = t('repositories.links.check')
+
 .table-responsive
   table.table.table-borderless.table-small-first-col
     colgroup
@@ -9,19 +12,38 @@
     tbody
       tr
         th
-          strong.me-2 = t('.name')
+          strong.me-2 = t('active_record.attributes.repository.name')
         td = @repository.full_name
       tr
         th
-          strong.me-2 = t('.language')
+          strong.me-2 = t('active_record.attributes.repository.language')
         td = @repository.language
       tr
         th
-          strong.me-2 = t('.creating_date')
+          strong.me-2 = t('active_record.attributes.repository.created_at')
         td = l(@repository.created_at, format: :long)
       tr
         th
-          strong.me-2 = t('.updating_date')
+          strong.me-2 = t('active_record.attributes.repository.updated_at')
         td = l(@repository.updated_at, format: :long)
-
-=< link_to 'Back to repositories', repositories_path
+hr
+  - if @repository.checks.any?
+    table.table.table-striped.mt-4
+      thead
+        tr
+          th[scope='col'] = t('active_record.attributes.check.id')
+          th[scope='col'] = t('active_record.attributes.check.state')
+          th[scope='col'] = t('active_record.attributes.check.commit_id')
+          th[scope='col'] = t('active_record.attributes.check.passed')
+          th[scope='col'] = t('active_record.attributes.check.created_at')
+      tbody
+        - @repository.checks.order(id: :desc).each do |check|
+          tr
+          td
+            = link_to repository_check_path(@repository, check) do
+              = check.id
+          td = check.aasm.human_state
+          td = link_to github_commit_url(@repository, check.commit_id) do
+            = check.commit_id
+          td = check.passed
+          td = l(check.created_at, format: :short)
