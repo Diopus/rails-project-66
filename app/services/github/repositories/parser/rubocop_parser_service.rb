@@ -2,14 +2,14 @@
 
 module Github::Repositories::Parser
   class RubocopParserService
-    def initialize(check:, relative_path:, report:)
+    def initialize(check:, relative_path:, data:)
       @check = check
       @relative_path = "#{relative_path}/"
-      @report = report
+      @data = data
     end
 
     def call
-      json = JSON.parse(@report)
+      json = JSON.parse(@data)
       json['files'].each do |file|
         file_path = file['path'].sub(@relative_path, '')
         file['offenses'].each do |offense|
