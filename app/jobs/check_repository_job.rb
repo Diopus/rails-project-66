@@ -5,7 +5,10 @@ class CheckRepositoryJob < ApplicationJob
 
   def perform(check_id)
     check = Repository::Check.find(check_id)
-    @path = Rails.root.join('tmp', 'repositories', check.repository.github_id.to_s)
+
+    repo_dir_name = check.repository.github_id.to_s
+    relative_path = repo_relative_path(repo_dir_name)
+    @path = Rails.root.join(relative_path)
 
     clean_repositories_directory
 
@@ -45,5 +48,10 @@ class CheckRepositoryJob < ApplicationJob
     branch = repo_data.default_branch
     last_sha = client.commits(repo.github_id, branch).first.sha
     last_sha[0...6]
+  end
+
+  def repo_relative_path(repo_dir_name)
+    tmp_path = Rails.application.config.x.repositories_tmp_path
+    [tmp_path, repo_dir_name].join('/')
   end
 end
