@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Github::Repositories::Linter
-  class RubocopService
+  class RubocopLinterService
     def initialize(path:, open3:, config_path:)
       @path = path
       @config_path = config_path
