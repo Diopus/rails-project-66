@@ -10,6 +10,8 @@ module Web
         @check = @repository.checks.find(params[:id])
 
         authorize @check
+
+        @offenses_grouped_by_files = @check.offenses.group_by(&:file_path)
       end
 
       def create
