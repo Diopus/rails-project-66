@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  check: one
+  file_path: MyString
+  cop_name: MyString
+  message: MyString
+  position: MyString
+
+two:
+  check: two
+  file_path: MyString
+  cop_name: MyString
+  message: MyString
+  position: MyString
