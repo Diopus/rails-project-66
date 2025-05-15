@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_08_190643) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_15_180905) do
   create_table "repositories", force: :cascade do |t|
     t.string "name"
     t.integer "github_id"
@@ -36,6 +36,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_08_190643) do
     t.index ["repository_id"], name: "index_repository_checks_on_repository_id"
   end
 
+  create_table "repository_offenses", force: :cascade do |t|
+    t.integer "check_id", null: false
+    t.string "file_path"
+    t.string "cop_name"
+    t.string "message"
+    t.string "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["check_id"], name: "index_repository_offenses_on_check_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "nickname"
@@ -46,4 +57,5 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_08_190643) do
 
   add_foreign_key "repositories", "users"
   add_foreign_key "repository_checks", "repositories"
+  add_foreign_key "repository_offenses", "repository_checks", column: "check_id"
 end
