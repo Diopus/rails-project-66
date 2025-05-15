@@ -27,3 +27,14 @@ table.table.table-hover.mb-5
       th = t('.rule_id')
       th = t('.coords')
   tbody
+    - @offenses_grouped_by_files.each do |file_path, offenses|
+      tr
+        td = link_to github_file_url(@repository, @check.commit_id, file_path) do
+          = file_path
+        td
+        td
+      - offenses.each do |offense|
+        tr
+          td = offense.message
+          td = offense.cop_name
+          td = offense.position
