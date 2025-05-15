@@ -1,6 +1,6 @@
 ---
 
-require:
+plugins:
   - rubocop-rails
   - rubocop-performance
 
