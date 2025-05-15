@@ -12,9 +12,7 @@ module Github::Repositories::Linter
       cmd = "bundle exec rubocop --format json --config #{@config_path} #{@path}"
       stdout, stderr, status = @open3.capture3(cmd)
 
-      unless status.success?
-        raise "RuboCop error:\n#{stderr}"
-      end
+      raise "RuboCop error:\n#{stderr}" if status.exitstatus > 1
 
       JSON.parse(stdout)
     end
