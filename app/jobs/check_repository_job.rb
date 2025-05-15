@@ -10,17 +10,40 @@ class CheckRepositoryJob < ApplicationJob
     relative_path = repo_relative_path(repo_dir_name)
     @path = Rails.root.join(relative_path)
 
+    # prepare directory
     clean_repositories_directory
 
     check.commit_id = last_commit_id_in_default_branch(check.repository)
 
+    # clone repository
     check.clone_repo!
     @open3 = ApplicationContainer[:open3]
-    Github::Repositories::CloneService.new(repository: check.repository, path: @path, open3: @open3).call
+    Github::Repositories::CloneService.new(
+      repository: check.repository,
+      path: @path,
+      open3: @open3
+    ).call
 
+    # run linter
     check.check!
     config_path = Rails.root.join('config/linters/rubocop.yml').to_s
-    Github::Repositories::Linter::RubocopService.new(path: @path, open3: @open3, config_path:).call
+    exit_status, result = Github::Repositories::Linter::RubocopLinterService.new(
+      path: @path,
+      open3: @open3,
+      config_path:
+    ).call
+
+    if exit_status > 1
+      check.fail!
+      return
+    end
+
+    # parse linter result
+    Github::Repositories::Parser::RubocopParserService.new(
+      check:,
+      relative_path:,
+      data: result
+    ).call
 
     check.finish!
   rescue StandardError => e
