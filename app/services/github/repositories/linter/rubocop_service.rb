@@ -14,7 +14,7 @@ module Github::Repositories::Linter
 
       raise "RuboCop error:\n#{stderr}" if status.exitstatus > 1
 
-      JSON.parse(stdout)
+      [status.exitstatus, stdout]
     end
   end
 end
