@@ -15,4 +15,8 @@ module ApplicationHelper
   def github_commit_url(repository, commit_id)
     ['https://github.com', repository.full_name, 'commit', commit_id].join('/')
   end
+
+  def github_file_url(repository, commit_id, file_path)
+    ['https://github.com', repository.full_name, 'blob', commit_id, file_path].join('/')
+  end
 end
