@@ -51,7 +51,7 @@ class CheckRepositoryJob < ApplicationJob
     Rails.logger.error(e.backtrace.join("\n"))
     check.fail!
   ensure
-    # clean_repositories_directory
+    clean_repositories_directory
 
     unless check.finished?
       check.fail!
