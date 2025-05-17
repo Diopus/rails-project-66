@@ -52,6 +52,8 @@ gem 'omniauth-rails_csrf_protection'
 gem 'pundit'
 
 gem 'rails-i18n'
+# Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
+gem 'rubocop-rails-omakase', require: false
 
 gem 'sentry-rails'
 gem 'sentry-ruby'
@@ -67,9 +69,6 @@ group :development, :test do
   gem 'dotenv-rails'
 
   gem 'faker'
-
-  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem 'rubocop-rails-omakase', require: false
 
   gem 'slim_lint'
 
