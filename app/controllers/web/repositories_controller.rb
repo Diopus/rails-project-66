@@ -19,24 +19,21 @@ module Web
     end
 
     def create
-      flag_update = true
-
       @repository = current_user.repositories.find_or_initialize_by(repository_params)
       if @repository.persisted?
         flash[:warning] = I18n.t('repositories.crud.create.exists')
         redirect_to repositories_path
+        UpdateRepositoryInfoJob.perform_later(@repository.id)
         return
       end
 
       if @repository.save
         redirect_to repositories_path, notice: I18n.t('repositories.crud.create.success')
+        UpdateRepositoryInfoJob.perform_later(@repository.id)
       else
         flash[:alert] = I18n.t('repositories.crud.create.failure')
         render :new, status: :unprocessable_entity
-        flag_update = false
       end
-
-      UpdateRepositoryInfoJob.perform_later(@repository.id) if flag_update
     end
 
     private
