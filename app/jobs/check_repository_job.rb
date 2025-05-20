@@ -3,68 +3,53 @@
 class CheckRepositoryJob < ApplicationJob
   queue_as :default
 
-  def perform(check_id)
-    check = Repository::Check.find(check_id)
+  rescue_from Repositories::CheckFactory::Error, with: :handle_factory_error
+  rescue_from StandardError, with: :handle_unexpected_error
 
-    repo_dir_name = check.repository.github_id.to_s
-    relative_path = repo_relative_path(repo_dir_name)
-    @path = Rails.root.join(relative_path)
+  def perform(check_id)
+    @check = Repository::Check.find(check_id)
+    repo = @check.repository
+    relative_path = repo_relative_path(repo)
+    path = repo_absolute_path(repo)
 
     # prepare directory
-    clean_repositories_directory
-
-    check.commit_id = last_commit_id_in_default_branch(check.repository)
+    Repositories::CleanupService.new(path:).call
 
     # clone repository
-    check.clone_repo!
-    @open3 = ApplicationContainer[:open3]
-    Github::Repositories::CloneService.new(
-      repository: check.repository,
-      path: @path,
-      open3: @open3
-    ).call
+    @check.clone_repo!
+    @check.commit_id = last_commit_id(repo)
+    Repositories::CloneService.new(repo:, path:).call
 
-    # run linter
-    check.check!
-    config_path = Rails.root.join('config/linters/rubocop.yml').to_s
-    exit_status, result = Github::Repositories::Linter::RubocopLinterService.new(
-      path: @path,
-      open3: @open3,
-      config_path:
-    ).call
+    # run @check
+    @check.check!
+    offenses = Repositories::CheckFactory.call(language: repo.language, path:, relative_path:)
 
-    if exit_status > 1
-      check.fail!
-      return
+    if offenses.empty?
+      @check.passed!
+    else
+      offenses.each do |attrs|
+        @check.offenses.create!(attrs)
+      end
     end
 
-    # parse linter result
-    Github::Repositories::Parser::RubocopParserService.new(
-      check:,
-      relative_path:,
-      data: result
-    ).call
-
-    check.finish!
-  rescue StandardError => e
-    Rails.logger.error("CheckRepositoryJob failed: #{e.message}")
-    Rails.logger.error(e.backtrace.join("\n"))
-    check.fail!
+    @check.finish!
   ensure
-    clean_repositories_directory
-
-    unless check.finished?
-      check.fail!
-    end
+    Repositories::CleanupService.new(path:).call
   end
 
   private
 
-  def clean_repositories_directory
-    FileUtils.rm_rf(@path) if @path && Dir.exist?(@path)
+  def handle_factory_error(exception)
+    Rails.logger.error "[CheckJob##{@@check.id}] #{exception.class}: #{exception.message}"
+    @check.fail!
   end
 
-  def last_commit_id_in_default_branch(repo)
+  def handle_unexpected_error(exception)
+    Rails.logger.error("CheckRepositoryJob failed: #{exception.full_message}")
+    @check&.fail!
+  end
+
+  def last_commit_id(repo)
     client = ApplicationContainer[:octokit_client][repo.user.token]
 
     repo_data = client.repository(repo.github_id)
@@ -73,8 +58,12 @@ class CheckRepositoryJob < ApplicationJob
     last_sha[0...6]
   end
 
-  def repo_relative_path(repo_dir_name)
-    tmp_path = Rails.application.config.x.repositories_tmp_path
-    [tmp_path, repo_dir_name].join('/')
+  def repo_relative_path(repo)
+    tmp_root = Rails.application.config.x.repositories_tmp_path
+    File.join(tmp_root, repo.github_id.to_s)
+  end
+
+  def repo_absolute_path(repo)
+    Rails.root.join(repo_relative_path(repo))
   end
 end

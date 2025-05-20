@@ -7,7 +7,7 @@ class UpdateRepositoryInfoJob < ApplicationJob
     repository = Repository.find(repository_id)
     client = ApplicationContainer[:octokit_client][repository.user.token]
 
-    return unless (repository_attributes = Github::Repositories::FetchInfoService.new(repository:, client:).call)
+    return unless (repository_attributes = Repositories::FetchInfoService.new(repository:, client:).call)
 
     repository.assign_attributes(repository_attributes)
     repository.save!
