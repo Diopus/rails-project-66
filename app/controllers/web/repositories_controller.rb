@@ -43,7 +43,7 @@ module Web
 
     def fetch_repositories_list
       client = ApplicationContainer[:octokit_client][current_user.token]
-      Github::Repositories::FetchListService.new(client:).call
+      ::Repositories::FetchListService.new(client:).call
     end
 
     def repository_params
