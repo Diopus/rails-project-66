@@ -11,5 +11,7 @@ class UpdateRepositoryInfoJob < ApplicationJob
 
     repository.assign_attributes(repository_attributes)
     repository.save!
+
+    AddWebhookForRepositoryJob.perform_later(repository_id) if add_webhook
   end
 end
