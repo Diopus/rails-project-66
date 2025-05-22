@@ -29,7 +29,7 @@ module Web
 
       if @repository.save
         redirect_to repositories_path, notice: I18n.t('repositories.crud.create.success')
-        UpdateRepositoryInfoJob.perform_later(@repository.id)
+        UpdateRepositoryInfoJob.perform_later(@repository.id, add_webhook: true)
       else
         flash[:alert] = I18n.t('repositories.crud.create.failure')
         render :new, status: :unprocessable_entity
