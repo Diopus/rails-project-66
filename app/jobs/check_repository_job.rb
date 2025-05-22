@@ -40,7 +40,7 @@ class CheckRepositoryJob < ApplicationJob
   private
 
   def handle_factory_error(exception)
-    Rails.logger.error "[CheckJob##{@@check.id}] #{exception.class}: #{exception.message}"
+    Rails.logger.error "[CheckJob##{@check.id}] #{exception.class}: #{exception.message}"
     @check.fail!
   end
 
