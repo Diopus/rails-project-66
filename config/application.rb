@@ -28,5 +28,8 @@ module RailsProject66
 
     config.i18n.available_locales = %i[en ru]
     config.i18n.default_locale = :en
+
+    # For external services like Webhooks
+    routes.default_url_options = { host: ENV.fetch('BASE_URL', nil) }
   end
 end
