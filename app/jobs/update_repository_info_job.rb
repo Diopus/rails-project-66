@@ -3,7 +3,7 @@
 class UpdateRepositoryInfoJob < ApplicationJob
   queue_as :default
 
-  def perform(repository_id)
+  def perform(repository_id, add_webhook: false)
     repository = Repository.find(repository_id)
     client = ApplicationContainer[:octokit_client][repository.user.token]
 
