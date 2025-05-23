@@ -42,8 +42,18 @@ Rails.application.configure do
   # Disable caching for Action Mailer templates even if Action Controller
   # caching is enabled.
   config.action_mailer.perform_caching = false
-  config.action_mailer.delivery_method = :file
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # Looking to send emails in production? Check out our Email API/SMTP product!
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    user_name: ENV.fetch('MAIL_USERNAME', nil),
+    password: ENV.fetch('MAIL_PASSWORD', nil),
+    address: ENV.fetch('MAIL_HOST', nil),
+    domain: ENV.fetch('MAIL_HOST', nil),
+    port: ENV['SMTP_PORT'] || '25',
+    authentication: :login
+  }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
