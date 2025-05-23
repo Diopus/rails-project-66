@@ -12,9 +12,14 @@ ru:
         commit_id: ID коммита
         created_at: Создано
         id: ID
+        offenses_count: Количество нарушений
         passed: Проверка пройдена
         state: Состояние
         updated_at: Обновлено
+      offenses:
+        cop_name: Идентификатор правила
+        message: Сообщение
+        position: Строка:Символ
       repository:
         created_at: Создано
         id: ID

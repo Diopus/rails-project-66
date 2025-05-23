@@ -5,8 +5,10 @@ ru:
       create:
         failure: Проверка не может быть создана
         success: Проверка успешно создана
+    links:
+      back: Back to repository
+    not_started: Проверка не начата
     titles:
       all: Проверки
       new: Новая проверка
       one: "Проверка # %{id}"
-    not_started: Проверка не начата

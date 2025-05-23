@@ -5,8 +5,10 @@ en:
       create:
         failure: Check couldn't be created
         success: Check has been successfully created
+    links:
+      back: Back to repository
+    not_started: Check not started
     titles:
       all: Checks
       new: New check
       one: "Check # %{id}"
-    not_started: Check not started

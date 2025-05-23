@@ -12,9 +12,14 @@ en:
         commit_id: Commit ID
         created_at: Created
         id: ID
+        offenses_count: Offenses count
         passed: Check passed
         state: State
         updated_at: Updated
+      offenses:
+        cop_name: Rule id
+        message: Message
+        position: Line:Column
       repository:
         created_at: Created
         id: ID

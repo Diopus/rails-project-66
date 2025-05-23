@@ -16,6 +16,7 @@ ru:
         success: Репозиторий успешно обновлен
     links:
       add: Добавить
+      back: Назад
       check: Начать проверку
       delete: Удалить
     titles:

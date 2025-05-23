@@ -16,6 +16,7 @@ en:
         success: Repository has been successfully updated
     links:
       add: Add
+      back: Back
       check: Start check
       delete: Delete
     titles:
