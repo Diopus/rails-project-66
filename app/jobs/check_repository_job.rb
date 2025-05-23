@@ -3,8 +3,15 @@
 class CheckRepositoryJob < ApplicationJob
   queue_as :default
 
-  rescue_from Repositories::CheckFactory::Error, with: :handle_factory_error
-  rescue_from StandardError, with: :handle_unexpected_error
+  rescue_from Repositories::CheckFactory::Error do |exception|
+    message = "[CheckJob##{@check.id}] #{exception.class}: #{exception.message}"
+    handle_error(message)
+  end
+
+  rescue_from StandardError do |exception|
+    message = "CheckRepositoryJob failed: #{exception.full_message}"
+    handle_error(message)
+  end
 
   def perform(check_id)
     @check = Repository::Check.find(check_id)
@@ -39,13 +46,8 @@ class CheckRepositoryJob < ApplicationJob
 
   private
 
-  def handle_factory_error(exception)
-    Rails.logger.error "[CheckJob##{@check.id}] #{exception.class}: #{exception.message}"
-    @check.fail!
-  end
-
-  def handle_unexpected_error(exception)
-    Rails.logger.error("CheckRepositoryJob failed: #{exception.full_message}")
+  def handle_error(message)
+    Rails.logger.error message
     @check&.fail!
   end
 
