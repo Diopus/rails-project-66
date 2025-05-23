@@ -1,3 +1,23 @@
-' Repository::Check#check_failed
-= "\r\n" * 2
-' #{@greeting}, find me in app/views/repository/check_mailer/check_failed.text.slim
+| #{t('.title', repo: @repo_name, check_id: @check_id)}
+= "\n\n"
+| #{t('.greeting', name: @user.nickname)}
+= "\n\n"
+| #{t('.intro')}
+= "\n\n"
+| #{t('.failure_reason', reason: @failure_reason)}
+= "\n\n"
+| #{t('.check_again')}
+= "\n\n"
+== t('.try_later')
+= "\n\n"
+== t('.contact_support')
+= "\n\n"
+| #{t('.check_details')} #{t('.link_to_check')}: #{@check_url}
+= "\n\n"
+= '------------------------------------------------------------------------'
+= "\n\n"
+| #{t('.thank_you')}
+= "\n\n"
+| #{t('.regards')}
+= "\n\n"
+| #{t('.repository_check_team')}

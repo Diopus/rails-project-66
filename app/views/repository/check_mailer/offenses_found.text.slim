@@ -1,3 +1,26 @@
-' Repository::Check#offenses_found
-= "\r\n" * 2
-' #{@greeting}, find me in app/views/repository/check_mailer/offenses_found.text.slim
+== t('.title', repo: @repo_name, check_id: @check_id)
+= "\n\n"
+== t('.greeting', name: @user.nickname)
+= "\n\n"
+== t('.intro')
+= "\n\n"
+== t('.offenses_count', count: @count)
+= "\n\n"
+= "\n\n"
+- case @count
+- when 1
+  == t('.result_fine')
+- when 2..10
+  == t('.result_acceptable')
+- else
+  == t('.result_too_many', style_guide: @style_guide)
+= "\n\n"
+== "#{t('.check_details')} #{t('.link_to_check')}: #{@check_url}"
+= "\n\n"
+= '------------------------------------------------------------------------'
+= "\n\n"
+== t('.thank_you')
+= "\n\n"
+== t('.regards')
+= "\n\n"
+== t('.repository_check_team')
