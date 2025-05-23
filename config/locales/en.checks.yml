@@ -11,4 +11,4 @@ en:
     titles:
       all: Checks
       new: New check
-      one: "Check # %{id}"
+      one: 'Check # %{id}'

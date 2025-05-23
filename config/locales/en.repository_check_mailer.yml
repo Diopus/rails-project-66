@@ -1,0 +1,32 @@
+en:
+  repository:
+    check_mailer:
+      check_failed:
+        check_again: Since our service works almost flawlessly, we recommend that you check everything again.
+        check_details: 'You can view the repository check details at:'
+        contact_support: And if you don't have time at all, of course, you can write to support, but all the specialists are on school vacation at grandma's dacha.
+        failure_reason: 'Failed with reason: %{reason}'
+        greeting: "Dear %{name},"
+        intro: We regret to inform you that the check of your repository has failed.
+        link_to_check: Check
+        regards: Regards,
+        repository_check_team: The Repository Check Team
+        subject: '%{repo} check #%{check_id} failed'
+        thank_you: Thank you for using our service.
+        title: '%{repo} check #%{check_id} failed'
+        try_later: "If you don't have time now, try again later."
+      offenses_found:
+        check_details: 'You can view the repository check details at:'
+        greeting: "Hi %{name},"
+        intro: Offenses were found in your repository during the check.
+        link_to_check: Check
+        offenses_count: 'Offenses count: %{count}'
+        regards: Regards,
+        repository_check_team: The Repository Check Team
+        result_acceptable: It's acceptable, but you should still take a look at it
+        result_fine: As there was only one offense found, you can relax and enjoy your day
+        result_too_many: "It's not acceptable. Check %{style_guide} RIGHT NOW."
+        subject: '%{repo} check #%{check_id} was finished with offenses'
+        thank_you: Thank you for using our service.
+        title: '%{repo} check #%{check_id} was finished with offenses'
+        unknown_style_guide: corresponding style guide

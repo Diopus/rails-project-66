@@ -4,8 +4,8 @@ en:
     attributes:
       check:
         aasm_state:
-          cloning: Cloning
           checking: Checking
+          cloning: Cloning
           failed: Failed
           finished: Finished
           pending: Pending

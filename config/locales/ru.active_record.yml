@@ -4,8 +4,8 @@ ru:
     attributes:
       check:
         aasm_state:
-          cloning: Клонирование
           checking: Проверка
+          cloning: Клонирование
           failed: Неудача
           finished: Завершено
           pending: Ожидание
