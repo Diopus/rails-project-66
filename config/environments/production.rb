@@ -85,12 +85,12 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address: ENV.fetch('MAIL_HOST', nil),
-    port: ENV['SMTP_PORT'] || '25',
+    port: ENV['SMTP_PORT'] || '587',
     domain: ENV.fetch('BASE_URL', nil),
     user_name: ENV.fetch('MAIL_USERNAME', nil),
     password: ENV.fetch('MAIL_PASSWORD', nil),
     authentication: 'plain',
-    enable_starttls: true,
+    enable_starttls_auto: true,
     open_timeout: 5,
     read_timeout: 5
   }
