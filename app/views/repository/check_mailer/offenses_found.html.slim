@@ -1,24 +1,20 @@
-h1 = t('.title', repo: @repo_name, check_id: @check_id) # "#{@repo_name} check ##{check_id} failed"
+h1 = t('.title', repo: @repo_name, check_id: @check_id)
 
-p = t('.greeting', name: @user.nickname) # Hi #{@user.nickname}
-p = t('.intro') # Offenses were found in your repository during the check.
-p = t('.offenses_count', count: @count) # Offenses count: #{@count}
-
+p = t('.greeting', name: @user.nickname)
+p = t('.intro')
+p = t('.offenses_count', count: @count)
+br
 - case @count
 - when 1
-  p = t('.result_fine') # As there was only one offense found, you can relax and enjoy your day
+  p = t('.result_fine')
 - when 2..10
-  p = t('.result_acceptable') # It's acceptable, but you should still take a look at it
+  p = t('.result_acceptable')
 - else
-  p = t('.result_too_many', style_guide: @style_guide) # It's not acceptable. Check #{@style_guide} right now.
-
-p = t('.check_details') # You can view the repository check details at:
+  p = t('.result_too_many', style_guide: @style_guide)
+br
+p = t('.check_details')
 = link_to t('.link_to_check'), @check_url
-
-p = t('.thank_you') # Thank you for using our service.
-p = t('.regards') # Regards
-p = t('.repository_check_team') # The Repository Check Team
-
-p = "#{Rails.application.config.app_name}"
-p = "#{Rails.application.config.app_url}"
-p = "#{Rails.application.config.app_email}"
+hr
+p = t('.thank_you')
+p = t('.regards')
+p = t('.repository_check_team')

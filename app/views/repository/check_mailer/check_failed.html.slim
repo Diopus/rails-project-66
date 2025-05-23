@@ -1,19 +1,16 @@
-h1 = t('.title', repo: @repo_name, check_id: @check_id) # "#{@repo_name} check ##{check_id} failed"
-
-p = t('.greeting', name: @user.nickname) # Dear #{@user.nickname}
-p = t('.failed_with_reason', reason: @failure_reason) # We regret to inform you that the check of your repository has failed.
-
-p = t('.check_again') # Since our service works almost flawlessly, we recommend that you check everything again.
-p = t('.try_later') # If you don't have time now, try again later.
-p = t('.contact_support') # And if you don't have time at all, of course, you can write to support, but all the specialists are on school vacation at grandma's dacha.
-
-p = t('.check_details') # You can view the repository check details at:
+h1 = t('.title', repo: @repo_name, check_id: @check_id)
+p = t('.greeting', name: @user.nickname)
+p = t('.intro')
+p = t('.failure_reason', reason: @failure_reason)
+br
+p = t('.check_again')
+p = t('.try_later')
+p = t('.contact_support')
+br
+p = t('.check_details')
 = link_to t('.link_to_check'), @check_url
 
-p = t('.thank_you') # Thank you for using our service.
-p = t('.regards') # Regards
-p = t('.repository_check_team') # The Repository Check Team
-
-p = "#{Rails.application.config.app_name}"
-p = "#{Rails.application.config.app_url}"
-p = "#{Rails.application.config.app_email}"
+hr
+p = t('.thank_you')
+p = t('.regards')
+p = t('.repository_check_team')
