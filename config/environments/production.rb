@@ -89,7 +89,7 @@ Rails.application.configure do
     domain: ENV.fetch('BASE_URL', nil),
     user_name: ENV.fetch('MAIL_USERNAME', nil),
     password: ENV.fetch('MAIL_PASSWORD', nil),
-    authentication: :login,
+    authentication: 'plain',
     enable_starttls: true,
     open_timeout: 5,
     read_timeout: 5
