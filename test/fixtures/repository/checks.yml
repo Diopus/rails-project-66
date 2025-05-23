@@ -2,12 +2,12 @@
 
 one:
   repository: one
-  commit_id: MyString
+  commit_id: 1
   passed: false
   offenses_count: 1
 
 two:
   repository: two
-  commit_id: MyString
+  commit_id: 2
   passed: false
   offenses_count: 1
