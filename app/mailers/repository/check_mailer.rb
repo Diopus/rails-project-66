@@ -6,51 +6,39 @@ class Repository::CheckMailer < ApplicationMailer
     'javascript' => 'https://github.com/airbnb/javascript/blob/master/README.md'
   }.freeze
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.repository.check_mailer.check_failed.subject
-  #
   def check_failed
+    prepare(params[:check])
+
     @failure_reason = params[:message]
 
-    check = params[:check]
-    @check_id = check.id
+    mail_to_user(:check_failed)
+  end
 
-    repo = check.repository
-    @repo_name = repo.full_name
-    @user = repo.user
+  def offenses_found
+    prepare(params[:check])
 
-    @check_url = repository_check_url(repo, check)
+    @count = @check.offenses.count
+    language = @repo.language.to_s.downcase
+    @style_guide = STYLE_GUIDES[language] or t('.unknown_style_guide')
 
+    mail_to_user(:offenses_found)
+  end
+
+  private
+
+  def mail_to_user(template_name)
     mail(
       to: email_address_with_name(@user.email, @user.nickname),
-      subject: t('.subject', repo: @repo_name, check_id: @check_id)
+      subject: t(".#{template_name}.subject", repo: @repo_name, check_id: @check_id)
     )
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.repository.check_mailer.offenses_found.subject
-  #
-  def offenses_found
-    check = params[:check]
+  def prepare(check)
+    @check = check
     @check_id = check.id
-    @count = check.offenses.count
-
-    repo = check.repository
-    @repo_name = repo.full_name
-    @user = repo.user
-
-    @check_url = repository_check_url(repo, check)
-
-    key = repo.language.to_s.downcase
-    @style_guide = STYLE_GUIDES[key] or t('.unknown_style_guide')
-
-    mail(
-      to: email_address_with_name(@user.email, @user.nickname),
-      subject: t('.subject', repo: @repo_name, check_id: @check_id)
-    )
+    @repo = check.repository
+    @repo_name = @repo.full_name
+    @user = @repo.user
+    @check_url = repository_check_url(@repo, check)
   end
 end
