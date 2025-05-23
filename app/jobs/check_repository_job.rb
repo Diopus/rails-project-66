@@ -34,9 +34,7 @@ class CheckRepositoryJob < ApplicationJob
     if offenses.empty?
       @check.passed!
     else
-      offenses.each do |attrs|
-        @check.offenses.create!(attrs)
-      end
+      process_offenses(offenses)
     end
 
     @check.finish!
@@ -49,6 +47,7 @@ class CheckRepositoryJob < ApplicationJob
   def handle_error(message)
     Rails.logger.error message
     @check&.fail!
+    Repository::CheckMailer.with(check: @check, message:).check_failed.deliver_later
   end
 
   def last_commit_id(repo)
@@ -58,6 +57,14 @@ class CheckRepositoryJob < ApplicationJob
     branch = repo_data.default_branch
     last_sha = client.commits(repo.github_id, branch).first.sha
     last_sha[0...6]
+  end
+
+  def process_offenses(offenses)
+    offenses.each do |attrs|
+      @check.offenses.create!(attrs)
+    end
+    offenses_count = offenses.count
+    Repository::CheckMailer.with(check: @check, offenses_count:).offenses_found.deliver_later
   end
 
   def repo_relative_path(repo)
