@@ -20,21 +20,22 @@ table.table
         = @check.commit_id
 = link_to repository_path(@repository), class: 'btn btn-primary mb-4' do
   = t('checks.links.back')
-table.table.table-hover.mb-5
-  thead
-    tr
-      th = t('active_record.attributes.offenses.message')
-      th = t('active_record.attributes.offenses.cop_name')
-      th = t('active_record.attributes.offenses.position')
-  tbody
-    - @offenses_grouped_by_files.each do |file_path, offenses|
+- if @offenses_grouped_by_files.present?
+  table.table.table-hover.mb-5
+    thead
       tr
-        td = link_to github_file_url(@repository, @check.commit_id, file_path) do
-          = file_path
-        td
-        td
-      - offenses.each do |offense|
+        th = t('active_record.attributes.offenses.message')
+        th = t('active_record.attributes.offenses.cop_name')
+        th = t('active_record.attributes.offenses.position')
+    tbody
+      - @offenses_grouped_by_files.each do |file_path, offenses|
         tr
-          td = offense.message
-          td = offense.cop_name
-          td = offense.position
+          td = link_to github_file_url(@repository, @check.commit_id, file_path) do
+            = file_path
+          td
+          td
+        - offenses.each do |offense|
+          tr
+            td = offense.message
+            td = offense.cop_name
+            td = offense.position
