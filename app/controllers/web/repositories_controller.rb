@@ -2,7 +2,6 @@
 
 module Web
   class RepositoriesController < ApplicationController
-    after_commit :invalidate_cache, only: %i[create]
     before_action :authenticate_user!, only: %i[index show new create]
 
     def index
@@ -40,19 +39,14 @@ module Web
     private
 
     def fetch_repositories_list
-      cache_key = repositories_list_cache_key
       Rails.cache.fetch(cache_key, expires_in: 10.minutes) do
         client = ApplicationContainer[:octokit_client][current_user.token]
         ::Repositories::FetchListService.new(client: client).call
       end
     end
 
-    def invalidate_cache
-      Rails.cache.delete(repositories_list_cache_key)
-    end
-
-    def repositories_list_cache_key
-      "repositories_list/#{current_user.id}"
+    def cache_key
+      Repository.cache_key_for_user_repos(current_user.id)
     end
 
     def repository_params
