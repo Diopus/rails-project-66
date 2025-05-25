@@ -32,7 +32,7 @@ class CheckRepositoryJob < ApplicationJob
     offenses = Repositories::CheckFactory.call(language: repo.language, path:, relative_path:)
 
     if offenses.empty?
-      @check.passed!
+      @check.passed = true
     else
       process_offenses(offenses)
     end
