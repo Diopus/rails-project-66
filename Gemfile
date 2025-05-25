@@ -52,12 +52,14 @@ gem 'omniauth-rails_csrf_protection'
 gem 'pundit'
 
 gem 'rails-i18n'
-
+gem 'redis'
 # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
 gem 'rubocop-rails-omakase', require: false
 
 gem 'sentry-rails'
 gem 'sentry-ruby'
+gem 'sidekiq'
+
 gem 'simple_form'
 gem 'slim-rails'
 
