@@ -2,6 +2,7 @@
 
 module Web
   class RepositoriesController < ApplicationController
+    after_commit :invalidate_cache, only: %i[create]
     before_action :authenticate_user!, only: %i[index show new create]
 
     def index
