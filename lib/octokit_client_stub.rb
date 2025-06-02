@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class OctokitClientStub
-  Repo = Struct.new(:name, :id, :full_name, :language, :clone_url, :ssh_url, :parent, :owner, :fork)
+  Repo = Struct.new(:name, :id, :full_name, :language, :clone_url, :ssh_url, :parent, :owner, :fork, :default_branch)
 
   # Stub for list of repos
   def repos
@@ -20,16 +20,27 @@ class OctokitClientStub
 
   # Stub for repo info
   def repository(_)
-    RepoFull.new(
+    Repo.new(
       name: 'test',
       id: 4,
       full_name: 'test/test',
-      language: 'JavaScript',
-      clone_url: 'https://github.com/test/test.js.git',
-      ssh_url: 'git@github.com:test/test.js.git',
-      parent:,
-      owner:,
-      fork: true
+      language: nil,
+      clone_url: 'https://github.com/test/test.git',
+      ssh_url: 'git@github.com:test/test.git',
+      parent: @parent,
+      owner: @owner,
+      fork: true,
+      default_branch: 'main'
     )
+  end
+
+  # Stub for commit info
+  Commit = Struct.new(:sha)
+  def commits(_, _)
+    [Commit.new('79dedc238ec30bc5f7c5ee8005e66c99d42a97f6')]
+  end
+
+  def create_hook(_, _, _, _)
+    true
   end
 end
