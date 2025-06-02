@@ -1,13 +1,25 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  repository: one
+ruby:
+  repository: ruby
+  commit_id: 1
+  passed: true
+  offenses_count: 0
+
+ruby_with_offenses:
+  repository: ruby
   commit_id: 1
   passed: false
   offenses_count: 1
 
-two:
-  repository: two
+js:
+  repository: js
+  commit_id: 2
+  passed: false
+  offenses_count: 0
+
+js_with_offenses:
+  repository: js
   commit_id: 2
   passed: false
   offenses_count: 1

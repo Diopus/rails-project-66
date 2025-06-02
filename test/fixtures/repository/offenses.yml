@@ -1,14 +1,14 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  check: one
+  check: ruby_with_offenses
   file_path: MyString
   cop_name: MyString
   message: MyString
   position: MyString
 
 two:
-  check: two
+  check: js_with_offenses
   file_path: MyString
   cop_name: MyString
   message: MyString
