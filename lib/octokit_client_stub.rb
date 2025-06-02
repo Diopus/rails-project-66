@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
 class OctokitClientStub
-  Repo = Struct.new(:name, :id, :full_name, :language, :clone_url, :ssh_url, :parent, :owner, :fork, :default_branch)
+  Repo = Struct.new(:name, :id, :full_name, :language, :clone_url, :ssh_url, :parent, :owner, :fork, :default_branch) do
+    def fork?
+      !!fork
+    end
+  end
 
   # Stub for list of repos
   def repos
