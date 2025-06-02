@@ -51,4 +51,8 @@ class OctokitClientStub
   def create_hook(_, _, _, _)
     true
   end
+
+  def hooks(_)
+    []
+  end
 end
