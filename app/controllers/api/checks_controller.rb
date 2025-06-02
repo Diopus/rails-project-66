@@ -7,7 +7,10 @@ module Api
     def create
       github_id = params[:repository][:id]
       repository = Repository.find_by(github_id:)
-      handle_error("No repository found with ID #{github_id}") unless repository
+      unless repository
+        handle_error("No repository found with ID #{github_id}")
+        return
+      end
 
       @check = repository.checks.build
       if @check.save
