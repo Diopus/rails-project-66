@@ -24,9 +24,13 @@ module Repositories
       # linter
       linter = LINTERS[key] or
         raise UnsupportedLanguageError, "No linter defined for language `#{language}`"
-      status, data = linter.new(path:).call
 
-      raise LinterError, "Linter failed with exit #{status}" if status > 1
+      begin
+        status, data = linter.new(path:).call
+      rescue StandardError => e
+        raise LinterError, e.message
+      end
+
       return [] if status.zero?
 
       # parser
