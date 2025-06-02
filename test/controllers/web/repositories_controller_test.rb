@@ -4,8 +4,8 @@ require 'test_helper'
 
 class Web::RepositoriesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @repository = repositories(:one)
-    @repository_other = repositories(:two)
+    @repository = repositories(:ruby)
+    @repository_other = repositories(:js)
     @user = users(:one)
   end
 
@@ -31,7 +31,7 @@ class Web::RepositoriesControllerTest < ActionDispatch::IntegrationTest
 
     # Stub the service to return a fake list
     service_stub = Struct.new(:call).new(fake_list)
-    Github::Repositories::FetchListService.stub :new, ->(client:) { service_stub } do # rubocop:disable Lint/UnusedBlockArgument
+    ::Repositories::FetchListService.stub :new, ->(client:) { service_stub } do # rubocop:disable Lint/UnusedBlockArgument
       get new_repository_path
     end
 
@@ -62,7 +62,7 @@ class Web::RepositoriesControllerTest < ActionDispatch::IntegrationTest
     assert new_repo.present?
     assert_redirected_to repositories_path
     assert_equal I18n.t('repositories.crud.create.success'), flash[:notice]
-    assert_enqueued_with(job: UpdateRepositoryInfoJob, args: [new_repo.id])
+    assert_enqueued_with(job: UpdateRepositoryInfoJob, args: [new_repo.id, { add_webhook: true }])
   end
 
   test 'should not create repository with invalid data' do
