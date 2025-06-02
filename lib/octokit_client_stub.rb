@@ -13,13 +13,15 @@ class OctokitClientStub
     ]
   end
 
+  alias repositories repos
+
   Owner = Struct.new(:login)
   @owner = Owner.new('user')
 
   @parent = Repo.new(language: 'Ruby')
 
   # Stub for repo info
-  def repository(_)
+  def repo(_)
     Repo.new(
       name: 'test',
       id: 4,
@@ -33,6 +35,8 @@ class OctokitClientStub
       default_branch: 'main'
     )
   end
+
+  alias repository repo
 
   # Stub for commit info
   Commit = Struct.new(:sha)
