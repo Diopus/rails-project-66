@@ -4,7 +4,7 @@ require 'test_helper'
 
 class Api::ChecksControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @repository = repositories(:ruby) # используйте фикстуру с github_id
+    @repository = repositories(:ruby)
     @github_id = @repository.github_id
   end
 
