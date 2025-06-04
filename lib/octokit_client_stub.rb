@@ -20,21 +20,20 @@ class OctokitClientStub
   alias repositories repos
 
   Owner = Struct.new(:login)
-  @owner = Owner.new('user')
-
-  @parent = Repo.new(language: 'Ruby')
 
   # Stub for repo info
   def repo(github_id)
+    owner = Owner.new('user')
+    parent = Repo.new(language: 'Ruby')
     Repo.new(
       name: 'test',
       id: github_id,
       full_name: 'test/test',
-      language: nil,
+      language: parent.language,
       clone_url: 'https://github.com/test/test.git',
       ssh_url: 'git@github.com:test/test.git',
-      parent: @parent,
-      owner: @owner,
+      owner:,
+      parent:,
       fork: true,
       default_branch: 'main'
     )
