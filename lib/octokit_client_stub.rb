@@ -10,9 +10,9 @@ class OctokitClientStub
   # Stub for list of repos
   def repos
     [
-      Repo.new(name: 'repo1', id: 1, language: 'Ruby', fork: false),
-      Repo.new(name: 'repo2', id: 2, language: 'JavaScript', fork: false),
-      Repo.new(name: 'repo3', id: 3, language: 'Python', fork: false),
+      Repo.new(name: 'repo1', id: 1, language: 'ruby', fork: false),
+      Repo.new(name: 'repo2', id: 2, language: 'javascript', fork: false),
+      Repo.new(name: 'repo3', id: 3, language: 'python', fork: false),
       Repo.new(name: 'repo4', id: 4, language: nil, fork: true)
     ]
   end
@@ -24,7 +24,7 @@ class OctokitClientStub
   # Stub for repo info
   def repo(github_id)
     owner = Owner.new('user')
-    parent = Repo.new(language: 'Ruby')
+    parent = Repo.new(language: 'ruby')
     Repo.new(
       name: 'test',
       id: github_id,
@@ -47,9 +47,7 @@ class OctokitClientStub
     [Commit.new('79dedc238ec30bc5f7c5ee8005e66c99d42a97f6')]
   end
 
-  def create_hook(_, _, _, _)
-    true
-  end
+  def create_hook(_, _, _, _); end
 
   def hooks(_)
     []

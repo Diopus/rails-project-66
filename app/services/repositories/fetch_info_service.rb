@@ -13,7 +13,7 @@ module Repositories
         name: repository_data.name,
         github_id: repository_data.id,
         full_name: repository_data.full_name,
-        language: repo_language(repository_data),
+        language: repo_language(repository_data).downcase,
         clone_url: repository_data.clone_url,
         ssh_url: repository_data.ssh_url
       }
