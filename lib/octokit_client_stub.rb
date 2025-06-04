@@ -25,10 +25,10 @@ class OctokitClientStub
   @parent = Repo.new(language: 'Ruby')
 
   # Stub for repo info
-  def repo(_)
+  def repo(github_id)
     Repo.new(
       name: 'test',
-      id: 4,
+      id: github_id,
       full_name: 'test/test',
       language: nil,
       clone_url: 'https://github.com/test/test.git',
