@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class OctokitClientStub
+  include Rails.application.routes.url_helpers
+
   Repo = Struct.new(:name, :id, :full_name, :language, :clone_url, :ssh_url, :parent, :owner, :fork, :default_branch) do
     def fork?
       !!fork
@@ -47,9 +49,12 @@ class OctokitClientStub
     [Commit.new('79dedc238ec30bc5f7c5ee8005e66c99d42a97f6')]
   end
 
-  def create_hook(_, _, _, _); end
+  def create_hook(_, _, _, _)
+    true
+  end
 
   def hooks(_)
-    []
+    hook = Struct.new(:config).new(Struct.new(:url).new(api_checks_url))
+    [hook]
   end
 end
