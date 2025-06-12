@@ -49,7 +49,7 @@ class OctokitClientStub
     [Commit.new('79dedc238ec30bc5f7c5ee8005e66c99d42a97f6')]
   end
 
-  def create_hook(_, _, _, _)
+  def create_hook(_, _, _, _) # rubocop:disable Naming/PredicateMethod,Lint/RedundantCopDisableDirective
     true
   end
 
