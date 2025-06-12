@@ -20,6 +20,10 @@ module ActiveSupport
     setup do
       Rails.application.routes.default_url_options[:locale] = I18n.default_locale
     end
+
+    def load_fixture(filename)
+      File.read(File.dirname(__FILE__) + "/fixtures/#{filename}")
+    end
   end
 end
 
