@@ -1,0 +1,47 @@
+[
+  {
+    "id": 101,
+    "name": "awesome-js-lib",
+    "full_name": "user/awesome-js-lib",
+    "private": false,
+    "language": "JavaScript",
+    "fork": false,
+    "default_branch": "main",
+    "owner": {
+      "login": "user",
+      "id": 1
+    },
+    "html_url": "https://github.com/user/awesome-js-lib"
+  },
+  {
+    "id": 102,
+    "name": "rails-project",
+    "full_name": "user/rails-project",
+    "private": false,
+    "language": "Ruby",
+    "fork": false,
+    "default_branch": "main",
+    "owner": {
+      "login": "user",
+      "id": 1
+    },
+    "html_url": "https://github.com/user/rails-project"
+  },
+  {
+    "id": 103,
+    "name": "ml-playground",
+    "full_name": "user/ml-playground",
+    "private": false,
+    "language": "Python",
+    "fork": true,
+    "parent": {
+      "full_name": "original/ml-playground"
+    },
+    "default_branch": "main",
+    "owner": {
+      "login": "user",
+      "id": 1
+    },
+    "html_url": "https://github.com/user/ml-playground"
+  }
+]

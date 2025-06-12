@@ -1,0 +1,37 @@
+[
+  {
+    "filePath": "/app/src/index.js",
+    "messages": [
+      {
+        "ruleId": "no-unused-vars",
+        "severity": 2,
+        "message": "'x' is assigned a value but never used.",
+        "line": 1,
+        "column": 7,
+        "nodeType": "Identifier"
+      },
+      {
+        "ruleId": "semi",
+        "severity": 1,
+        "message": "Missing semicolon.",
+        "line": 2,
+        "column": 20,
+        "nodeType": "ExpressionStatement"
+      }
+    ],
+    "errorCount": 1,
+    "warningCount": 1,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 1,
+    "source": "const x = 42\nconsole.log(x)\n"
+  },
+  {
+    "filePath": "/app/src/utils.js",
+    "messages": [],
+    "errorCount": 0,
+    "warningCount": 0,
+    "fixableErrorCount": 0,
+    "fixableWarningCount": 0,
+    "source": "export function greet(name) {\n  return `Hello, ${name}`;\n}\n"
+  }
+]
