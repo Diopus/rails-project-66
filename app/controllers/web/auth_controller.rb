@@ -25,7 +25,7 @@ module Web
       User.find_or_create_by!(email: auth_hash['info']['email']) do |u|
         u.nickname = auth_hash['info']['nickname']
         u.email = auth_hash['info']['email']
-        u.token = auth_hash['credentials']['token'] # Токен пользователя, потребуется нам позднее
+        u.token = auth_hash['credentials']['token']
       end
     end
   end
