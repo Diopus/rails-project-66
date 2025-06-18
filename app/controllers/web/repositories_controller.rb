@@ -28,6 +28,7 @@ module Web
         add_webhook = true
       else
         flash[:alert] = t('repositories.crud.create.failure')
+        @repositories_list = fetch_repositories_list
         render :new, status: :unprocessable_entity
         return
       end
