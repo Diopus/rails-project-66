@@ -2,7 +2,7 @@
 
 module Web
   class RepositoriesController < ApplicationController
-    before_action :authenticate_user!, only: %i[index show new create]
+    before_action :authenticate_user!
 
     def index
       @repositories = current_user.repositories
