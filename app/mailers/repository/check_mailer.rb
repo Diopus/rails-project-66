@@ -17,7 +17,7 @@ class Repository::CheckMailer < ApplicationMailer
   def offenses_found
     prepare(params[:check])
 
-    @count = @check.offenses.count
+    @count = params[:offenses_count]
     language = @repo.language.to_s.downcase
     @style_guide = STYLE_GUIDES[language] or t('.unknown_style_guide')
 
