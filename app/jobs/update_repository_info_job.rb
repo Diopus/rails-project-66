@@ -4,7 +4,9 @@ class UpdateRepositoryInfoJob < ApplicationJob
   queue_as :default
 
   def perform(repository_id, add_webhook: false)
-    repository = Repository.find(repository_id)
+    repository = Repository.find_by(id: repository_id)
+    return unless repository
+
     client = ApplicationContainer[:octokit_client][repository.user.token]
 
     return unless (repository_attributes = Repositories::FetchInfoService.new(repository:, client:).call)
