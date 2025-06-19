@@ -23,7 +23,7 @@ class CheckRepositoryJob < ApplicationJob
     # clone repository
     @check.clone_repo!
     @check.commit_id = last_commit_id(repo)
-    Repositories::CloneService.new(repo:, path:).call
+    clone_repo(path:, repo:)
 
     # run @check
     @check.check!
@@ -41,6 +41,16 @@ class CheckRepositoryJob < ApplicationJob
   end
 
   private
+
+  def clone_repo(path:, repo:)
+    open3 = ApplicationContainer[:open3]
+    cmd = "git clone #{repo.clone_url} #{path}"
+    output, status = open3.capture2e(cmd)
+
+    return if status.exitstatus.zero?
+
+    raise "git clone error:\n#{output}"
+  end
 
   def handle_error(message)
     Rails.logger.error message
