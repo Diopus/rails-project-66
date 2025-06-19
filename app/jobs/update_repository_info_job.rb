@@ -9,10 +9,9 @@ class UpdateRepositoryInfoJob < ApplicationJob
 
     client = ApplicationContainer[:octokit_client][repository.user.token]
 
-    return unless (repository_attributes = Repositories::FetchInfoService.new(repository:, client:).call)
+    repository_attributes = Repositories::FetchInfoService.new(repository:, client:).call
 
-    repository.assign_attributes(repository_attributes)
-    repository.save!
+    repository.update!(repository_attributes)
 
     AddWebhookForRepositoryJob.perform_later(repository_id) if add_webhook
   end
