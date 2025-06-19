@@ -16,7 +16,7 @@ module Repositories
     class UnsupportedLanguageError < Error; end
     class LinterError < Error; end
 
-    def self.call(language:, path:, relative_path:)
+    def self.call(language:, path:)
       raise UnsupportedLanguageError, "Unsupported language `#{language}`" unless LINTERS.key?(language.to_s.downcase)
 
       key = language.to_s.downcase
@@ -34,9 +34,9 @@ module Repositories
       return [] if status.zero?
 
       # parser
-      parser = PARSERS[key] or
-        raise UnsupportedLanguageError, "No parser defined for language `#{language}`"
-      parser.new(data:, relative_path:).call
+      parser = PARSERS[key]
+
+      parser.new(data:, path:).call
     end
   end
 end

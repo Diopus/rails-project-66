@@ -2,9 +2,9 @@
 
 module Repositories::Parser
   class RubocopParserService
-    def initialize(data:, relative_path:)
+    def initialize(data:, path:)
       @data = data
-      @relative_path = "#{relative_path}/"
+      @relative_path = "#{Pathname.new(path).relative_path_from(Rails.root)}/" # rubocop:disable Rails/FilePath
     end
 
     def call

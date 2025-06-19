@@ -18,7 +18,6 @@ class CheckRepositoryJob < ApplicationJob
     return unless @check
 
     repo = @check.repository
-    relative_path = repo_relative_path(repo)
     path = repo_absolute_path(repo)
 
     # clone repository
@@ -28,7 +27,7 @@ class CheckRepositoryJob < ApplicationJob
 
     # run @check
     @check.check!
-    offenses = Repositories::CheckFactory.call(language: repo.language, path:, relative_path:)
+    offenses = Repositories::CheckFactory.call(language: repo.language, path:)
 
     if offenses.empty?
       @check.passed = true
