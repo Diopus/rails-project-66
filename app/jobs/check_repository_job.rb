@@ -54,7 +54,7 @@ class CheckRepositoryJob < ApplicationJob
 
   def handle_error(message)
     Rails.logger.error message
-    @check&.fail!
+    @check.fail!
     Repository::CheckMailer.with(check: @check, message:).check_failed.deliver_later
   end
 
