@@ -2,15 +2,15 @@
 
 module Repositories::Parser
   class EslintParserService
-    def initialize(data:, relative_path:)
+    def initialize(data:, path:)
       @data = data
-      @relative_path = "#{relative_path}/"
+      @path = "#{path}/"
     end
 
     def call
       json = JSON.parse(@data)
       json.flat_map do |file|
-        file_path = file['filePath'].sub(@relative_path, '')
+        file_path = file['filePath'].sub(@path, '')
         file['messages'].map do |offense|
           line = offense['line']
           column = offense['column']
