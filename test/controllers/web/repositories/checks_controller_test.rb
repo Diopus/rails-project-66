@@ -39,7 +39,9 @@ class Web::Repositories::ChecksControllerTest < ActionDispatch::IntegrationTest
   test 'should not create check for another user repository' do
     sign_in @user
 
-    post repository_checks_url @repository_js
+    assert_no_difference 'Repository::Check.count' do
+      post repository_checks_url @repository_js
+    end
     assert_redirected_to root_url
   end
 end

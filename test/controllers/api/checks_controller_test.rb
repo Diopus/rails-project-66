@@ -20,10 +20,11 @@ class Api::ChecksControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should not create check but return 422 when repo not found' do
-    post api_checks_url,
-         params: { repository: { id: 0 }, after: 'push' },
-         as: :json
-
+    assert_no_difference 'Repository::Check.count' do
+      post api_checks_url,
+           params: { repository: { id: 0 }, after: 'push' },
+           as: :json
+    end
     assert_no_enqueued_jobs
     assert_response :unprocessable_entity
   end

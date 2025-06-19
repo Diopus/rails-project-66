@@ -42,8 +42,7 @@ class Web::RepositoriesControllerTest < ActionDispatch::IntegrationTest
   test 'should not create repository if exists but should run update job' do
     sign_in @user
 
-    # Stub the job to prevent it from running
-    UpdateRepositoryInfoJob.stub :perform_later, true do
+    assert_no_difference 'Repository.count' do
       post repositories_url, params: { repository: { github_id: @repository.github_id } }
     end
 
@@ -68,7 +67,9 @@ class Web::RepositoriesControllerTest < ActionDispatch::IntegrationTest
   test 'should not create repository with invalid data' do
     sign_in @user
 
+    assert_no_difference 'Repository.count' do
     post repositories_url, params: { repository: { github_id: nil } }
+    end
 
     assert_response :unprocessable_entity
     assert_equal I18n.t('repositories.crud.create.failure'), flash[:alert]
