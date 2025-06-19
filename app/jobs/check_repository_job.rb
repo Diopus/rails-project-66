@@ -21,9 +21,6 @@ class CheckRepositoryJob < ApplicationJob
     relative_path = repo_relative_path(repo)
     path = repo_absolute_path(repo)
 
-    # prepare directory
-    Repositories::CleanupService.new(path:).call
-
     # clone repository
     @check.clone_repo!
     @check.commit_id = last_commit_id(repo)
@@ -41,7 +38,7 @@ class CheckRepositoryJob < ApplicationJob
 
     @check.finish!
   ensure
-    Repositories::CleanupService.new(path:).call
+    FileUtils.rm_rf(path) if path
   end
 
   private
