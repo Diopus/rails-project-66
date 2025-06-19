@@ -22,8 +22,7 @@ module Repositories
       key = language.to_s.downcase
 
       # linter
-      linter = LINTERS[key] or
-        raise UnsupportedLanguageError, "No linter defined for language `#{language}`"
+      linter = LINTERS[key]
 
       begin
         status, data = linter.new(path:).call
