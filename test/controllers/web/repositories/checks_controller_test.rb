@@ -4,10 +4,16 @@ require 'test_helper'
 
 class Web::Repositories::ChecksControllerTest < ActionDispatch::IntegrationTest
   setup do
+    queue_adapter.perform_enqueued_jobs = true
+
     @repository_ruby = repositories(:ruby)
     @repository_js = repositories(:js)
     @check_ruby = repository_checks(:ruby)
     @user = users(:one)
+  end
+
+  teardown do
+    queue_adapter.perform_enqueued_jobs = false
   end
 
   test 'should show check' do
@@ -32,8 +38,9 @@ class Web::Repositories::ChecksControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to repository_url(@repository_ruby)
     check = @repository_ruby.checks.last
-    assert_enqueued_with(job: CheckRepositoryJob, args: [check.id])
+    assert_performed_with(job: CheckRepositoryJob, args: [check.id])
     assert_equal I18n.t('checks.crud.create.success'), flash[:notice]
+    assert check.finished?
   end
 
   test 'should not create check for another user repository' do

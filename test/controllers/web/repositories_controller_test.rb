@@ -4,9 +4,15 @@ require 'test_helper'
 
 class Web::RepositoriesControllerTest < ActionDispatch::IntegrationTest
   setup do
+    queue_adapter.perform_enqueued_jobs = true
+
     @repository = repositories(:ruby)
     @repository_other = repositories(:js)
     @user = users(:one)
+  end
+
+  teardown do
+    queue_adapter.perform_enqueued_jobs = false
   end
 
   test 'should not get index when not logged in' do
@@ -61,7 +67,8 @@ class Web::RepositoriesControllerTest < ActionDispatch::IntegrationTest
     assert new_repo.present?
     assert_redirected_to repositories_path
     assert_equal I18n.t('repositories.crud.create.success'), flash[:notice]
-    assert_enqueued_with(job: UpdateRepositoryInfoJob, args: [new_repo.id, { add_webhook: true }])
+    assert_performed_with(job: UpdateRepositoryInfoJob, args: [new_repo.id, { add_webhook: true }])
+    assert_equal new_repo.ssh_url, 'git@github.com:test/test.git'
   end
 
   test 'should not create repository with invalid data' do
