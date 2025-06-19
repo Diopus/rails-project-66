@@ -68,7 +68,7 @@ class Web::RepositoriesControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
 
     assert_no_difference 'Repository.count' do
-    post repositories_url, params: { repository: { github_id: nil } }
+      post repositories_url, params: { repository: { github_id: nil } }
     end
 
     assert_response :unprocessable_entity

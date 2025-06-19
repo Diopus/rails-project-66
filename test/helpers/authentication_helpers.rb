@@ -8,6 +8,9 @@ module AuthenticationHelpers
       info: {
         email: user.email,
         nickname: user.nickname
+      },
+      credentials: {
+        token: user.token
       }
     }
 
