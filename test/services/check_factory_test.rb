@@ -22,7 +22,7 @@ class Repositories::CheckFactoryTest < ActiveSupport::TestCase
     parser_stub = Minitest::Mock.new
     parser_stub.expect :call, []
 
-    Repositories::Parser::RubocopParserService.stub :new, ->(data:, relative_path:) { parser_stub } do # rubocop:disable Lint/UnusedBlockArgument
+    Repositories::Parser::RubocopParserService.stub :new, ->(data:, path:) { parser_stub } do # rubocop:disable Lint/UnusedBlockArgument
       result = default_factory_call(language: 'ruby')
       assert_equal [], result
     end
@@ -42,8 +42,8 @@ class Repositories::CheckFactoryTest < ActiveSupport::TestCase
 
   private
 
-  def default_factory_call(language:, path: '/home/tmp', relative_path: '/tmp')
-    Repositories::CheckFactory.call(language:, path:, relative_path:)
+  def default_factory_call(language:, path: '/home/tmp')
+    Repositories::CheckFactory.call(language:, path:)
   end
 
   def stub_open3_exitstatus(exitstatus, stdout = '[]')
