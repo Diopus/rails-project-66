@@ -14,7 +14,9 @@ class CheckRepositoryJob < ApplicationJob
   end
 
   def perform(check_id)
-    @check = Repository::Check.find(check_id)
+    @check = Repository::Check.find_by(id: check_id)
+    return unless @check
+
     repo = @check.repository
     relative_path = repo_relative_path(repo)
     path = repo_absolute_path(repo)
