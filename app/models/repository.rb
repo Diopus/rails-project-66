@@ -9,8 +9,6 @@ class Repository < ApplicationRecord
     "#{REPOSITORIES_LIST_CACHE_KEY_PREFIX}/#{user_id}"
   end
 
-  after_commit :invalidate_cache, on: :create
-
   belongs_to :user, inverse_of: :repositories
   has_many :checks, class_name: 'Repository::Check', inverse_of: :repository, dependent: :destroy
 
